@@ -1,15 +1,41 @@
-<img width="400" src="https://github.com/user-attachments/assets/44bac428-01bb-4fe9-9d85-96cba7698bee" alt="Tor Logo with the onion and a crosshair on it"/>
+<p align="center">
+  <img src="https://img.shields.io/badge/SIEM-Microsoft%20Sentinel-0078D4?style=for-the-badge&logo=microsoftazure&logoColor=white" alt="Sentinel"/>
+  <img src="https://img.shields.io/badge/EDR-Defender%20for%20Endpoint-00A4EF?style=for-the-badge&logo=microsoft&logoColor=white" alt="Defender"/>
+  <img src="https://img.shields.io/badge/Query-KQL-742774?style=for-the-badge&logo=microsoftazure&logoColor=white" alt="KQL"/>
+</p>
 
-# Threat Hunt Report: Unauthorized TOR Usage
-- [Scenario Creation](https://github.com/murpheelee/threat-hunting-scenario-tor/blob/main/threat-hunting-scenario-tor-event-creation.md)
+# Threat Hunt Report: Unauthorized TOR Browser Usage
 
-## Platforms and Languages Leveraged
-- Windows 10 Virtual Machines (Microsoft Azure)
-- EDR Platform: Microsoft Defender for Endpoint
-- Kusto Query Language (KQL)
-- Tor Browser
+> **Hypothesis-driven threat hunt** detecting unauthorized Tor browser installation and usage on a corporate endpoint using Microsoft Defender for Endpoint and KQL log analysis.
 
-##  Scenario
+## Objective
+
+Investigate suspected employee use of Tor browsers to bypass network security controls, based on anomalous encrypted traffic patterns and connections to known Tor entry nodes. Hunt across file events, process events, and network events to build a complete attack timeline.
+
+## Key Findings
+
+| Finding | Detail |
+|---------|--------|
+| **User** | `labgang` on `ryan-win10-rce3` |
+| **Activity** | Downloaded, silently installed, and actively used Tor browser |
+| **Network** | Confirmed connections to Tor entry nodes (port 9001, 9150, 443) |
+| **Evidence** | `tor-shopping-list.txt` created on desktop |
+| **Response** | Device isolated, manager notified |
+
+## Tools & Environment
+
+| Tool | Purpose |
+|------|---------|
+| Microsoft Defender for Endpoint | EDR telemetry and log collection |
+| KQL (Kusto Query Language) | Threat hunting queries across device tables |
+| Azure VM (Windows 10) | Target endpoint |
+| Tor Browser | Threat artifact |
+
+- [Scenario Creation Steps](threat-hunting-scenario-tor-event-creation.md)
+
+---
+
+## Scenario
 
 Management suspects that some employees may be using TOR browsers to bypass network security controls because recent network logs show unusual encrypted traffic patterns and connections to known TOR entry nodes. Additionally, there have been anonymous reports of employees discussing ways to access restricted sites during work hours. The goal is to detect any TOR usage and analyze related security incidents to mitigate potential risks. If any use of TOR is found, notify management.
 
